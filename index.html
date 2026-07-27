@@ -33,11 +33,19 @@
   }
 </script>
 <body>
- <a id="passLink" href="#">
-  Open My Flight Pass
-</a>
- <script>
+  <a id="passLink" href="#" style="font-size:24px;">
+    Open My Flight Pass
+  </a>
 
-</script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const member = params.get("member");
+
+    if (member) {
+      document.getElementById("passLink").href =
+        "https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec?member=" +
+        encodeURIComponent(member);
+    }
+  </script>
 </body>
 </html>
