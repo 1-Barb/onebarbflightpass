@@ -15,27 +15,17 @@
   <meta name="apple-mobile-web-app-title"
         content="One Barb Flight Pass">
 
- <link rel="apple-touch-icon" sizes="180x180" href="https://1-barb.github.io/onebarbflightpass/apple-touch-icon.png?v=4">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png">
+ <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 
   <title>One Barb Flight Pass</title>
 </head>
 
 <body>
-  <a id="passLink" href="#" style="font-size:24px;">
-    Open My Flight Pass
-  </a>
+  <p>Opening One Barb Flight Pass…</p>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const member = params.get("member");
-    const passLink = document.getElementById("passLink");
-
-    if (member) {
-      passLink.href =
-        "https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec?member=" +
-        encodeURIComponent(member);
-    }
+    window.location.replace("https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec?member=OBAF-0001");
   </script>
 </body>
 </html>
