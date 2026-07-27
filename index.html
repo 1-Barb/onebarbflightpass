@@ -20,7 +20,18 @@
 
   <title>One Barb Flight Pass</title>
 </head>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const member = params.get("member");
 
+  const passLink = document.getElementById("passLink");
+
+  if (member) {
+    passLink.href =
+      "https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec?member=" +
+      encodeURIComponent(member);
+  }
+</script>
 <body>
   <p>Opening One Barb Flight Pass…</p>
 
