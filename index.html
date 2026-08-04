@@ -2,59 +2,738 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="One Barb Flight Pass">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
 
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#050505">
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="One Barb Flight Pass"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="apple-touch-icon.png"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="apple-touch-icon.png"
+  >
 
   <title>One Barb Flight Pass</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #111;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root {
+      --orange: #f15a24;
+      --orange-light: #ff7a35;
+      --black: #050505;
+      --panel: #111111;
+      --border: #343434;
+      --white: #ffffff;
+      --muted: #b3b3b3;
+      --green: #42dc78;
     }
 
-    #passLink {
-      background: #f58220;
-      color: white;
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        14px
+        max(24px, env(safe-area-inset-bottom));
+
+      color: var(--white);
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(241, 90, 36, 0.25),
+          transparent 34%
+        ),
+        linear-gradient(180deg, #1a1a1a, #050505);
+
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .terminal {
+      position: relative;
+      max-width: 440px;
+      margin: 0 auto;
+      overflow: hidden;
+
+      background:
+        repeating-linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.018) 0,
+          rgba(255, 255, 255, 0.018) 2px,
+          transparent 2px,
+          transparent 8px
+        ),
+        #080808;
+
+      border: 2px solid var(--orange);
+      border-radius: 28px;
+
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.64),
+        0 0 26px rgba(241, 90, 36, 0.18);
+    }
+
+    .terminal::before {
+      content: "";
+      position: absolute;
+      top: -95px;
+      right: -105px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: rgba(241, 90, 36, 0.12);
+      pointer-events: none;
+    }
+
+    .header {
+      position: relative;
+      padding: 25px 20px 20px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 7px 13px;
+
+      color: var(--orange-light);
+      background: rgba(241, 90, 36, 0.1);
+      border: 1px solid rgba(241, 90, 36, 0.48);
+      border-radius: 999px;
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      display: block;
+      width: 122px;
+      height: 122px;
+      margin: 0 auto 10px;
+      object-fit: contain;
+
+      filter:
+        drop-shadow(0 9px 12px rgba(0, 0, 0, 0.7))
+        drop-shadow(0 0 7px rgba(241, 90, 36, 0.22));
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--orange-light);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .welcome {
+      margin: 13px auto 0;
+      max-width: 330px;
+      color: #d8d8d8;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .status-bar {
+      padding: 13px 16px;
+      color: #050505;
+      background:
+        linear-gradient(
+          90deg,
+          #d74717,
+          var(--orange-light),
+          #d74717
+        );
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: 1.6px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .content {
+      padding: 21px 19px 23px;
+    }
+
+    .browser-alert {
+      display: none;
+      margin-bottom: 17px;
+      padding: 14px 15px;
+      color: #fff4ed;
+      background: rgba(241, 90, 36, 0.12);
+      border: 1px solid rgba(241, 90, 36, 0.48);
+      border-left: 4px solid var(--orange);
+      border-radius: 13px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .browser-alert strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--orange-light);
+      font-size: 13px;
+    }
+
+    .instruction-card {
+      padding: 16px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.04),
+          transparent 34%
+        ),
+        var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+    }
+
+    .instruction-card h2 {
+      margin: 0 0 6px;
+      color: #ffffff;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .instruction-intro {
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .device-panel {
+      display: none;
+    }
+
+    .device-panel.is-visible {
+      display: block;
+    }
+
+    .device-heading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: var(--orange-light);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 31px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-number {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      color: #050505;
+      background: var(--orange);
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 0 12px rgba(241, 90, 36, 0.22);
+    }
+
+    .step-text {
+      padding-top: 5px;
+      color: #e1e1e1;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .success-note {
+      margin: 14px 0 0;
+      padding: 10px 11px;
+      color: #dcffe7;
+      background: rgba(66, 220, 120, 0.08);
+      border: 1px solid rgba(66, 220, 120, 0.3);
+      border-radius: 11px;
+      font-size: 11px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .open-button {
+      display: flex;
+      width: 100%;
+      min-height: 55px;
+      margin-top: 18px;
+      padding: 14px 18px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      color: #050505;
+      background:
+        linear-gradient(
+          180deg,
+          var(--orange-light),
+          var(--orange)
+        );
+
+      border: 0;
+      border-radius: 999px;
+
+      box-shadow:
+        0 11px 24px rgba(0, 0, 0, 0.38),
+        inset 0 1px rgba(255, 255, 255, 0.28);
+
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing: 0.9px;
       text-decoration: none;
-      padding: 16px 28px;
-      border-radius: 10px;
-      font-size: 22px;
-      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .open-button:active {
+      transform: translateY(1px);
+    }
+
+    .member-note {
+      margin: 14px 0 0;
+      color: #a9a9a9;
+      font-size: 11px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .member-number {
+      display: none;
+      margin: 11px 0 0;
+      color: var(--orange-light);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 17px;
+      padding: 13px;
+      color: #ffd9d9;
+      background: rgba(255, 100, 100, 0.08);
+      border: 1px solid rgba(255, 100, 100, 0.35);
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .footer {
+      padding: 0 18px 22px;
+      color: #777777;
+      font-size: 9px;
+      letter-spacing: 0.7px;
+      line-height: 1.5;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 390px) {
+      body {
+        padding-left: 7px;
+        padding-right: 7px;
+      }
+
+      .terminal {
+        border-radius: 22px;
+      }
+
+      .header {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .content {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<a id="passLink" href="#">Open My Flight Pass</a>
+  <main class="terminal">
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const member = params.get("member");
+    <header class="header">
 
-const deployment =
-"https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec";
+      <p class="eyebrow">
+        ✈ One Barb Flight Terminal
+      </p>
 
-if(member){
-    document.getElementById("passLink").href =
-        deployment + "?member=" + encodeURIComponent(member);
-}else{
-    document.getElementById("passLink").href = deployment;
-}
-</script>
+      <img
+        class="logo"
+        src="apple-touch-icon.png"
+        alt="One Barb Flight Pass logo"
+      >
+
+      <h1>Welcome Aboard</h1>
+
+      <p class="subtitle">
+        One Barb Athletic Foundation
+      </p>
+
+      <p class="welcome">
+        Your digital membership Flight Pass is ready.
+        Save this page to your Home Screen before opening your pass.
+      </p>
+
+    </header>
+
+    <div class="status-bar">
+      Flight Pass Ready
+    </div>
+
+    <section class="content">
+
+      <div
+        id="browserAlert"
+        class="browser-alert"
+      >
+        <strong>Open this page in Safari first</strong>
+
+        You are viewing the link inside another app.
+        Tap the menu or Share button and choose
+        <strong style="display:inline;">Open in Safari</strong>.
+        Then follow the iPhone steps below.
+      </div>
+
+      <section class="instruction-card">
+
+        <h2>Save Your Flight Pass</h2>
+
+        <p class="instruction-intro">
+          This only takes a few seconds and gives you quick access
+          from your phone’s Home Screen.
+        </p>
+
+        <div
+          id="iphonePanel"
+          class="device-panel"
+        >
+          <p class="device-heading">
+            🍎 iPhone Instructions
+          </p>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step-number">1</span>
+              <span class="step-text">
+                Make sure this page is open in <strong>Safari</strong>.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">2</span>
+              <span class="step-text">
+                Tap the <strong>Share</strong> button at the bottom of Safari.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">3</span>
+              <span class="step-text">
+                Scroll down and select <strong>Add to Home Screen</strong>.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">4</span>
+              <span class="step-text">
+                Tap <strong>Add</strong>. The One Barb icon will appear
+                on your Home Screen.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">5</span>
+              <span class="step-text">
+                After saving it, return here and tap
+                <strong>Open My Flight Pass</strong>.
+              </span>
+            </li>
+          </ol>
+
+          <p class="success-note">
+            Once saved, tap the One Barb icon anytime to reach your pass.
+          </p>
+        </div>
+
+        <div
+          id="androidPanel"
+          class="device-panel"
+        >
+          <p class="device-heading">
+            🤖 Android Instructions
+          </p>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step-number">1</span>
+              <span class="step-text">
+                Make sure this page is open in <strong>Chrome</strong>.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">2</span>
+              <span class="step-text">
+                Tap the <strong>three-dot menu</strong>.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">3</span>
+              <span class="step-text">
+                Select <strong>Add to Home screen</strong>
+                or <strong>Install app</strong>.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">4</span>
+              <span class="step-text">
+                Confirm the installation, then return here and tap
+                <strong>Open My Flight Pass</strong>.
+              </span>
+            </li>
+          </ol>
+
+          <p class="success-note">
+            The One Barb icon will remain on your Home Screen for quick access.
+          </p>
+        </div>
+
+        <div
+          id="desktopPanel"
+          class="device-panel"
+        >
+          <p class="device-heading">
+            💻 Open This Link on Your Phone
+          </p>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step-number">1</span>
+              <span class="step-text">
+                Open the membership email on your phone.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">2</span>
+              <span class="step-text">
+                Tap the Flight Pass link from the email.
+              </span>
+            </li>
+
+            <li class="step">
+              <span class="step-number">3</span>
+              <span class="step-text">
+                Follow the iPhone or Android instructions shown there.
+              </span>
+            </li>
+          </ol>
+        </div>
+
+      </section>
+
+      <a
+        id="passLink"
+        class="open-button"
+        href="#"
+      >
+        ✈ Open My Flight Pass
+      </a>
+
+      <p class="member-note">
+        You can add or update your photo from inside your Flight Pass.
+        Family memberships can also add a family name and second member.
+      </p>
+
+      <p
+        id="memberNumber"
+        class="member-number"
+      ></p>
+
+      <div
+        id="errorMessage"
+        class="error-message"
+      >
+        This link is missing a member number.
+        Please reopen the personalized link from your membership email.
+      </div>
+
+    </section>
+
+    <footer class="footer">
+      One Community • One Purpose • One Barb
+    </footer>
+
+  </main>
+
+  <script>
+    const APPS_SCRIPT_URL =
+      'https://script.google.com/macros/s/AKfycbxebqfzrvue9-tB9zo-x1SoDST0g9FeYxcds0yEB_ay8uSA41rJQU66-B52Dv275sZz/exec';
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const incomingMember =
+      (params.get('member') || '').trim();
+
+    const savedMember =
+      localStorage.getItem('oneBarbMemberNumber') || '';
+
+    const memberNumber =
+      incomingMember || savedMember;
+
+    const passLink =
+      document.getElementById('passLink');
+
+    const memberNumberDisplay =
+      document.getElementById('memberNumber');
+
+    const errorMessage =
+      document.getElementById('errorMessage');
+
+    const iphonePanel =
+      document.getElementById('iphonePanel');
+
+    const androidPanel =
+      document.getElementById('androidPanel');
+
+    const desktopPanel =
+      document.getElementById('desktopPanel');
+
+    const browserAlert =
+      document.getElementById('browserAlert');
+
+    const userAgent =
+      navigator.userAgent || '';
+
+    const isIOS =
+      /iPhone|iPad|iPod/i.test(userAgent) ||
+      (
+        navigator.platform === 'MacIntel' &&
+        navigator.maxTouchPoints > 1
+      );
+
+    const isAndroid =
+      /Android/i.test(userAgent);
+
+    const isSafari =
+      /Safari/i.test(userAgent) &&
+      !/CriOS|FxiOS|EdgiOS|OPiOS|GSA/i.test(userAgent);
+
+    const isLikelyInAppBrowser =
+      /FBAN|FBAV|Instagram|GSA|Line|Twitter|TikTok|Snapchat|Gmail/i
+        .test(userAgent) ||
+      (
+        isIOS &&
+        !isSafari
+      );
+
+    if (isIOS) {
+      iphonePanel.classList.add('is-visible');
+
+      if (isLikelyInAppBrowser) {
+        browserAlert.style.display = 'block';
+      }
+    } else if (isAndroid) {
+      androidPanel.classList.add('is-visible');
+    } else {
+      desktopPanel.classList.add('is-visible');
+    }
+
+    if (memberNumber) {
+      localStorage.setItem(
+        'oneBarbMemberNumber',
+        memberNumber
+      );
+
+      passLink.href =
+        APPS_SCRIPT_URL +
+        '?member=' +
+        encodeURIComponent(memberNumber);
+
+      memberNumberDisplay.textContent =
+        'Member ' + memberNumber;
+
+      memberNumberDisplay.style.display =
+        'block';
+    } else {
+      passLink.style.display = 'none';
+      errorMessage.style.display = 'block';
+    }
+  </script>
 
 </body>
 </html>
