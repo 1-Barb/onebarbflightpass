@@ -454,6 +454,14 @@
     <section class="content">
 
       <div
+        id="installedWelcome"
+        class="success-note"
+        style="display:none; margin:0 0 17px;"
+      >
+        Flight Pass saved. Tap below to continue to your pass.
+      </div>
+
+      <div
         id="browserAlert"
         class="browser-alert"
       >
@@ -465,7 +473,7 @@
         Then follow the iPhone steps below.
       </div>
 
-      <section class="instruction-card">
+      <section id="instructionCard" class="instruction-card">
 
         <h2>Save Your Flight Pass</h2>
 
@@ -676,6 +684,16 @@
     const browserAlert =
       document.getElementById('browserAlert');
 
+    const instructionCard =
+      document.getElementById('instructionCard');
+
+    const installedWelcome =
+      document.getElementById('installedWelcome');
+
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
     const userAgent =
       navigator.userAgent || '';
 
@@ -701,7 +719,11 @@
         !isSafari
       );
 
-    if (isIOS) {
+    if (isStandalone) {
+      instructionCard.style.display = 'none';
+      browserAlert.style.display = 'none';
+      installedWelcome.style.display = 'block';
+    } else if (isIOS) {
       iphonePanel.classList.add('is-visible');
 
       if (isLikelyInAppBrowser) {
