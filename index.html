@@ -81,171 +81,45 @@
     }
 
 
-    .crow-flight-layer {
+    .real-crow-flight {
       position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .crow {
-      position: absolute;
-      left: -70px;
-      width: 34px;
-      height: 18px;
+      top: 92px;
+      left: -115%;
+      width: 112%;
+      max-width: none;
       opacity: 0;
-      animation:
-        crowFly 15s linear infinite,
-        crowFade 15s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter:
+        drop-shadow(0 0 7px rgba(241, 90, 36, 0.22));
+      animation: realCrowSweep 3.8s ease-out 0.55s 1 forwards;
     }
 
-    .crow::before,
-    .crow::after {
-      content: "";
-      position: absolute;
-      top: 5px;
-      width: 20px;
-      height: 8px;
-      background: #0a0a0a;
-      border-radius: 60% 60% 15% 15%;
-      transform-origin: center center;
-      box-shadow:
-        0 0 1px rgba(255, 255, 255, 0.08);
-      animation: wingFlap 0.72s ease-in-out infinite alternate;
-    }
-
-    .crow::before {
-      left: 0;
-      transform: rotate(-18deg);
-    }
-
-    .crow::after {
-      right: 0;
-      transform: rotate(18deg);
-      animation-delay: 0.09s;
-    }
-
-    .crow-body {
-      position: absolute;
-      top: 6px;
-      left: 14px;
-      width: 10px;
-      height: 7px;
-      background: #070707;
-      border-radius: 60% 60% 45% 45%;
-    }
-
-    .crow-body::before {
-      content: "";
-      position: absolute;
-      top: -2px;
-      right: -5px;
-      width: 7px;
-      height: 6px;
-      background: #070707;
-      border-radius: 60%;
-    }
-
-    .crow-body::after {
-      content: "";
-      position: absolute;
-      top: 1px;
-      right: -9px;
-      width: 5px;
-      height: 3px;
-      background: #070707;
-      clip-path: polygon(0 0, 100% 50%, 0 100%);
-    }
-
-    .crow-1 {
-      top: 68%;
-      animation-delay: 0s;
-      animation-duration: 15s;
-      transform: scale(0.9);
-    }
-
-    .crow-2 {
-      top: 62%;
-      animation-delay: 1.4s;
-      animation-duration: 16.5s;
-      transform: scale(0.72);
-    }
-
-    .crow-3 {
-      top: 74%;
-      animation-delay: 2.7s;
-      animation-duration: 14.8s;
-      transform: scale(1.05);
-    }
-
-    .crow-4 {
-      top: 58%;
-      animation-delay: 4.1s;
-      animation-duration: 17.2s;
-      transform: scale(0.78);
-    }
-
-    .crow-5 {
-      top: 70%;
-      animation-delay: 5.4s;
-      animation-duration: 15.7s;
-      transform: scale(0.92);
-    }
-
-    @keyframes crowFly {
+    @keyframes realCrowSweep {
       0% {
-        left: -70px;
-        transform: translateY(45px) rotate(-4deg) scale(var(--crow-scale, 1));
-      }
-
-      25% {
-        transform: translateY(8px) rotate(1deg) scale(var(--crow-scale, 1));
-      }
-
-      55% {
-        transform: translateY(-35px) rotate(-1deg) scale(var(--crow-scale, 1));
-      }
-
-      80% {
-        transform: translateY(-70px) rotate(2deg) scale(var(--crow-scale, 1));
-      }
-
-      100% {
-        left: calc(100% + 80px);
-        transform: translateY(-105px) rotate(4deg) scale(var(--crow-scale, 1));
-      }
-    }
-
-    @keyframes crowFade {
-      0%,
-      5% {
+        left: -115%;
         opacity: 0;
+        transform: translateY(26px) scale(0.96);
       }
 
-      12%,
-      82% {
-        opacity: 0.42;
+      12% {
+        opacity: 0.88;
       }
 
-      95%,
+      68% {
+        opacity: 0.92;
+      }
+
       100% {
+        left: 108%;
         opacity: 0;
-      }
-    }
-
-    @keyframes wingFlap {
-      0% {
-        transform: rotate(-8deg) scaleY(0.78);
-      }
-
-      100% {
-        transform: rotate(-28deg) scaleY(1.12);
+        transform: translateY(-42px) scale(1.03);
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .crow {
+      .real-crow-flight {
         display: none;
       }
     }
@@ -288,7 +162,6 @@
 
     .header {
       position: relative;
-      z-index: 2;
       padding: 25px 20px 20px;
       text-align: center;
     }
@@ -348,8 +221,6 @@
     }
 
     .status-bar {
-      position: relative;
-      z-index: 2;
       padding: 13px 16px;
       color: #050505;
       background:
@@ -367,8 +238,6 @@
     }
 
     .content {
-      position: relative;
-      z-index: 2;
       padding: 21px 19px 23px;
     }
 
@@ -557,8 +426,6 @@
     }
 
     .footer {
-      position: relative;
-      z-index: 2;
       padding: 0 18px 22px;
       color: #777777;
       font-size: 9px;
@@ -599,13 +466,12 @@
 
   <main class="terminal">
 
-    <div class="crow-flight-layer" aria-hidden="true">
-      <span class="crow crow-1"><span class="crow-body"></span></span>
-      <span class="crow crow-2"><span class="crow-body"></span></span>
-      <span class="crow crow-3"><span class="crow-body"></span></span>
-      <span class="crow crow-4"><span class="crow-body"></span></span>
-      <span class="crow crow-5"><span class="crow-body"></span></span>
-    </div>
+    <img
+      class="real-crow-flight"
+      src="one-barb-crow-flock.png"
+      alt=""
+      aria-hidden="true"
+    >
 
     <header class="header">
 
